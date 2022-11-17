@@ -12,40 +12,51 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Client.clientName, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    private var clientList: FetchedResults<Client>
 
+    @State var clientItems = [Client]()
+    
+    @State var addClient = ""
+    
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            
+            VStack {
+                
+                TextField("Lägg till objekt", text: $addClient)
+                
+                List {
+                    ForEach(clientList) { client in
+                        NavigationLink(destination: RoomView(currentClient: client)) {
+                            Text(client.clientName!)
+                        }
+                        
+                        
+                    }
+                    .onDelete(perform: deleteItems)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                    ToolbarItem {
+                        Button(action: addItem) {
+                            Label("Add Item", systemImage: "plus")
+                        }
                     }
                 }
-                .onDelete(perform: deleteItems)
+                Text("Select an item")
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
         }
     }
 
     private func addItem() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newClient = Client(context: viewContext)
+            newClient.clientName = addClient
 
             do {
                 try viewContext.save()
@@ -60,7 +71,7 @@ struct ContentView: View {
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { clientList[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
