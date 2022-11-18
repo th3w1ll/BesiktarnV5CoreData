@@ -14,7 +14,7 @@ struct RoomView: View {
     
     @State var currentClient : Client
     
-    @State var clientTitle = ""
+    @State var roomName = ""
     
     @State var addRoom = ""
     
@@ -26,17 +26,15 @@ struct RoomView: View {
             TextField("Lägg till rum", text: $addRoom)
             
             List {
-                
-                Text("En rad")
-                
-                //.onDelete(perform: deleteItems)
+                ForEach(roomList) { room in
+                    NavigationLink(destination: NoteView()) {
+                        Text(room.roomName!)
+                    }
+                    
+                    
+                }
+                .onDelete(perform: deleteItems)
             }
-            
-            
-            
-            
-            
-            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -52,6 +50,8 @@ struct RoomView: View {
             }
             Text("Select an item")
         }.onAppear() {
+            roomName = currentClient.clientName!
+            
             loadRoom()
         }
     }
@@ -59,7 +59,7 @@ struct RoomView: View {
     
     
     func loadRoom() {
-        if let roomSet = currentClient.roomrelation {
+        if let roomSet = currentClient.roomrelationship {
             
             let rooms = roomSet as! Set <Room>
             
@@ -73,13 +73,14 @@ struct RoomView: View {
         let newRoom = Room(context: viewContext)
         newRoom.roomName = addRoom
         
-        
+        currentClient.addToRoomrelationship(newRoom)
         
         do {
             try viewContext.save()
         } catch {
             //Kunde inte spara
         }
+        loadRoom()
     }
     
     

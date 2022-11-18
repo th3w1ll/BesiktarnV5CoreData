@@ -2,18 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Client" representedClassName="Client" syncable="YES" codeGenerationType="class">
         <attribute name="clientName" optional="YES" attributeType="String"/>
-        <relationship name="roomrelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="clientrelation" inverseEntity="Room"/>
+        <relationship name="roomrelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Room" inverseName="clientrelationship" inverseEntity="Room"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
-        <attribute name="roomNote" optional="YES" attributeType="String"/>
-        <relationship name="upperroomrelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="noterelation" inverseEntity="Room"/>
-    </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="roomName" optional="YES" attributeType="String"/>
-        <relationship name="clientrelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="roomrelation" inverseEntity="Client"/>
-        <relationship name="noterelation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="upperroomrelation" inverseEntity="Note"/>
+        <relationship name="clientrelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="roomrelationship" inverseEntity="Client"/>
     </entity>
 </model>
