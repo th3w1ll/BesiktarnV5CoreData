@@ -48,7 +48,7 @@ struct ContentView: View {
                         }
                     }
                 }
-                Text("Select an item")
+                Text("Skapa en ny besiktning")
             }
         }
     }

@@ -27,7 +27,7 @@ struct RoomView: View {
             
             List {
                 ForEach(roomList) { room in
-                    NavigationLink(destination: NoteView()) {
+                    NavigationLink(destination: NoteView(currentRoom: room)) {
                         Text(room.roomName!)
                     }
                     
@@ -48,7 +48,7 @@ struct RoomView: View {
                     }
                 }
             }
-            Text("Select an item")
+            Text("Lägg till och välj rum")
         }.onAppear() {
             roomName = currentClient.clientName!
             

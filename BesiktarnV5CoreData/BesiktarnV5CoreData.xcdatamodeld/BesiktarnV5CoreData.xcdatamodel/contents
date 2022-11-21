@@ -7,8 +7,13 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
+        <attribute name="roomNote" optional="YES" attributeType="String"/>
+        <relationship name="nestedroomrelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Room" inverseName="noterelationship" inverseEntity="Room"/>
+    </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="roomName" optional="YES" attributeType="String"/>
         <relationship name="clientrelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Client" inverseName="roomrelationship" inverseEntity="Client"/>
+        <relationship name="noterelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="nestedroomrelationship" inverseEntity="Note"/>
     </entity>
 </model>

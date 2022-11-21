@@ -40,6 +40,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B800D4CF292BAA90001E08F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8A2223229266426002236E2 /* ContentView.swift */,
+				B8A2224329266A93002236E2 /* RoomView.swift */,
+				B8560F4D2926758E00EB6991 /* NoteView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B8A2222429266426002236E2 = {
 			isa = PBXGroup;
 			children = (
@@ -60,9 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				B8A2223029266426002236E2 /* BesiktarnV5CoreDataApp.swift */,
-				B8A2223229266426002236E2 /* ContentView.swift */,
-				B8A2224329266A93002236E2 /* RoomView.swift */,
-				B8560F4D2926758E00EB6991 /* NoteView.swift */,
+				B800D4CF292BAA90001E08F6 /* Views */,
 				B8A2223429266426002236E2 /* Assets.xcassets */,
 				B8A2223929266426002236E2 /* Persistence.swift */,
 				B8A2223B29266426002236E2 /* BesiktarnV5CoreData.xcdatamodeld */,
