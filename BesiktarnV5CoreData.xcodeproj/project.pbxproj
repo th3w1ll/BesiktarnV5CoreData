@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B800D4F0292BAF24001E08F6 /* Previewing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B800D4EF292BAF24001E08F6 /* Previewing.swift */; };
 		B8560F4E2926758E00EB6991 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8560F4D2926758E00EB6991 /* NoteView.swift */; };
 		B8A2223129266426002236E2 /* BesiktarnV5CoreDataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A2223029266426002236E2 /* BesiktarnV5CoreDataApp.swift */; };
 		B8A2223329266426002236E2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A2223229266426002236E2 /* ContentView.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B800D4EF292BAF24001E08F6 /* Previewing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previewing.swift; sourceTree = "<group>"; };
 		B8560F4D2926758E00EB6991 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		B8A2222D29266426002236E2 /* BesiktarnV5CoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BesiktarnV5CoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A2223029266426002236E2 /* BesiktarnV5CoreDataApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BesiktarnV5CoreDataApp.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				B800D4CF292BAA90001E08F6 /* Views */,
 				B8A2223429266426002236E2 /* Assets.xcassets */,
 				B8A2223929266426002236E2 /* Persistence.swift */,
+				B800D4EF292BAF24001E08F6 /* Previewing.swift */,
 				B8A2223B29266426002236E2 /* BesiktarnV5CoreData.xcdatamodeld */,
 				B8A2223629266426002236E2 /* Preview Content */,
 			);
@@ -163,6 +166,7 @@
 				B8A2224429266A93002236E2 /* RoomView.swift in Sources */,
 				B8A2223D29266426002236E2 /* BesiktarnV5CoreData.xcdatamodeld in Sources */,
 				B8A2223129266426002236E2 /* BesiktarnV5CoreDataApp.swift in Sources */,
+				B800D4F0292BAF24001E08F6 /* Previewing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
