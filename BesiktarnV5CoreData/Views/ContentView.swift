@@ -14,52 +14,61 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Client.clientName, ascending: true)],
         animation: .default)
+    
     private var clientList: FetchedResults<Client>
 
     @State var clientItems = [Client]()
-    
     @State var addClient = ""
-    
-    
+        
     var body: some View {
         NavigationView {
             
             VStack {
+                HStack{
+                    TextField("Lägg till objekt", text: $addClient)
+                        .padding(.leading)
+                        .keyboardType(.default)
+                    
+                    Button(action: addItem) {
+                        Text("+")
+                            .font(.title)
+                    }
+                    EditButton()
+                        .padding(.trailing)
+                }
                 
-                TextField("Lägg till objekt", text: $addClient)
                 
                 List {
                     ForEach(clientList) { client in
                         NavigationLink(destination: RoomView(currentClient: client)) {
                             Text(client.clientName!)
                         }
-                        
-                        
                     }
                     .onDelete(perform: deleteItems)
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem {
-                        Button(action: addItem) {
-                            Label("Add Item", systemImage: "plus")
-                        }
-                    }
-                }
-                Text("Skapa en ny besiktning")
+                .navigationTitle(Text("Besiktningar"))
+                .scrollContentBackground(.hidden)
+                .listStyle(.inset)
             }
         }
     }
 
+    
+    
+
     private func addItem() {
         withAnimation {
+            
+            if (addClient == "") {
+                return
+            }
+            
             let newClient = Client(context: viewContext)
             newClient.clientName = addClient
 
             do {
                 try viewContext.save()
+                addClient = ""
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -84,13 +93,6 @@ struct ContentView: View {
         }
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

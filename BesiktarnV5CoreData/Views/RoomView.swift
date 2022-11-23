@@ -13,47 +13,40 @@ struct RoomView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var currentClient : Client
-    
     @State var roomName = ""
-    
     @State var addRoom = ""
-    
     @State var roomList = [Room]()
     
     var body: some View {
         VStack {
-            
-            TextField("Lägg till rum", text: $addRoom)
-            
+        
+            HStack{
+                TextField("Lägg till rum", text: $addRoom)
+                    .padding(.leading)
+                    .keyboardType(.default)
+                
+                Button(action: saveRoom) {
+                    Text("+") 
+                }
+                EditButton()
+                    .padding(.trailing)
+            }
+
             List {
                 ForEach(roomList) { room in
-                    NavigationLink(destination: NoteView(currentRoom: room)) {
+                    NavigationLink(destination: NoteView(currentRoom: room, roomName: $roomName)) {
                         Text(room.roomName!)
                     }
-                    
-                    
                 }
                 .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    
-                    Button(action: {
-                        saveRoom()
-                    }){
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Lägg till och välj rum")
         }.onAppear() {
             roomName = currentClient.clientName!
-            
             loadRoom()
         }
+        .navigationTitle(Text("Rum"))
+        .scrollContentBackground(.hidden)
+        .listStyle(.inset)
     }
     
     
@@ -70,17 +63,25 @@ struct RoomView: View {
     }
     
     func saveRoom() {
-        let newRoom = Room(context: viewContext)
-        newRoom.roomName = addRoom
-        
-        currentClient.addToRoomrelationship(newRoom)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            //Kunde inte spara
+        withAnimation{
+            if(addRoom == "") {
+                return
+            }
+            
+            let newRoom = Room(context: viewContext)
+            newRoom.roomName = addRoom
+            
+            currentClient.addToRoomrelationship(newRoom)
+            
+            do {
+                try viewContext.save()
+                addRoom = ""
+            } catch {
+                //Kunde inte spara
+            }
+            loadRoom()
         }
-        loadRoom()
+
     }
     
     

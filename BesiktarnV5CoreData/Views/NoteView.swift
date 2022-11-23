@@ -13,18 +13,27 @@ struct NoteView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var currentRoom : Room
-    
     @State var noteName = ""
-    
     @State var addNote = ""
-    
     @State var noteList = [Note]()
+    
+    @Binding var roomName : String
     
     var body: some View {
         
         VStack {
-            
-            TextField("Lägg till anteckningar", text: $addNote)
+            HStack{
+                TextField("Lägg till anteckningar", text: $addNote)
+                    .padding(.leading)
+                    .keyboardType(.default)
+                
+                Button(action: saveNote) {
+                    Text("+")
+                        .font(.title)
+                }
+                EditButton()
+                    .padding(.trailing)
+            }
             
             List {
                 ForEach(noteList) { note in
@@ -32,26 +41,17 @@ struct NoteView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    
-                    Button(action: {
-                        saveNote()
-                    }){
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Lägg till och välj rum")
         }.onAppear() {
             noteName = currentRoom.roomName!
-            
             loadNote()
         }
+        .navigationTitle(Text("Besiktningar"))
+        .scrollContentBackground(.hidden)
+        .listStyle(.inset)
     }
+    
+    
+    
     
     func loadNote() {
         if let noteSet = currentRoom.noterelationship {
@@ -65,17 +65,24 @@ struct NoteView: View {
     }
     
     func saveNote() {
-        let newNote = Note(context: viewContext)
-        newNote.roomNote = addNote
-        
-        currentRoom.addToNoterelationship(newNote)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            //Kunde inte spara
+        withAnimation{
+            if (addNote == "") {
+                return
+            }
+            
+            let newNote = Note(context: viewContext)
+            newNote.roomNote = addNote
+            
+            currentRoom.addToNoterelationship(newNote)
+            
+            do {
+                try viewContext.save()
+                addNote = ""
+            } catch {
+                //Kunde inte spara
+            }
+            loadNote()
         }
-        loadNote()
     }
     
     private func deleteItems(offsets: IndexSet) {
@@ -98,6 +105,6 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView(currentRoom: Room())
+        NoteView(currentRoom: Room(), roomName: roomName)
     }
 }

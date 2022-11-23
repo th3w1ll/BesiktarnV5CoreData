@@ -5,6 +5,9 @@
 //  Created by Patrik Korab on 2022-11-21.
 //
 
+
+
+/*
 import CoreData
 import SwiftUI
 
@@ -53,5 +56,5 @@ struct PreviewingData {
         return createdItems
     }}
 }
-
+*/
 
