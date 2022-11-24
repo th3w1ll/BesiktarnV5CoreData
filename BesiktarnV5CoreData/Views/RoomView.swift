@@ -21,12 +21,12 @@ struct RoomView: View {
         VStack {
         
             HStack{
-                TextField("Lägg till rum", text: $addRoom)
+                TextField("Add Room Name", text: $addRoom)
                     .padding(.leading)
                     .keyboardType(.default)
                 
                 Button(action: saveRoom) {
-                    Text("+") 
+                    Text("Add") 
                 }
                 EditButton()
                     .padding(.trailing)
@@ -44,7 +44,7 @@ struct RoomView: View {
             roomName = currentClient.clientName!
             loadRoom()
         }
-        .navigationTitle(Text("Rum"))
+        .navigationTitle(Text(roomName))
         .scrollContentBackground(.hidden)
         .listStyle(.inset)
     }

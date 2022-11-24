@@ -19,22 +19,24 @@ struct ContentView: View {
 
     @State var clientItems = [Client]()
     @State var addClient = ""
-        
+    
+    @State var isEditing = false
+    @State var addButtonDisabled                = false
+    
     var body: some View {
         NavigationView {
             
             VStack {
                 HStack{
-                    TextField("Lägg till objekt", text: $addClient)
+                    TextField("Add Client Name", text: $addClient)
                         .padding(.leading)
                         .keyboardType(.default)
                     
-                    Button(action: addItem) {
-                        Text("+")
-                            .font(.title)
+                    Button(action: withAnimation {addItem}) {
+                        Text("Add")
                     }
                     EditButton()
-                        .padding(.trailing)
+                    .padding(.trailing)
                 }
                 
                 
@@ -46,18 +48,16 @@ struct ContentView: View {
                     }
                     .onDelete(perform: deleteItems)
                 }
-                .navigationTitle(Text("Besiktningar"))
+                .navigationTitle(Text("Clients"))
                 .scrollContentBackground(.hidden)
                 .listStyle(.inset)
             }
+            
         }
     }
 
-    
-    
-
     private func addItem() {
-        withAnimation {
+        //withAnimation {
             
             if (addClient == "") {
                 return
@@ -75,7 +75,7 @@ struct ContentView: View {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
-        }
+       // }
     }
 
     private func deleteItems(offsets: IndexSet) {
@@ -92,6 +92,9 @@ struct ContentView: View {
             }
         }
     }
+    
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

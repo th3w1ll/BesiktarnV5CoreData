@@ -16,6 +16,7 @@ struct NoteView: View {
     @State var noteName = ""
     @State var addNote = ""
     @State var noteList = [Note]()
+    @State var rumName = ""
     
     @Binding var roomName : String
     
@@ -23,13 +24,12 @@ struct NoteView: View {
         
         VStack {
             HStack{
-                TextField("Lägg till anteckningar", text: $addNote)
+                TextField("Add Note", text: $addNote)
                     .padding(.leading)
                     .keyboardType(.default)
                 
                 Button(action: saveNote) {
-                    Text("+")
-                        .font(.title)
+                    Text("Add")
                 }
                 EditButton()
                     .padding(.trailing)
@@ -44,8 +44,9 @@ struct NoteView: View {
         }.onAppear() {
             noteName = currentRoom.roomName!
             loadNote()
+            rumName = roomName
         }
-        .navigationTitle(Text("Besiktningar"))
+        .navigationTitle(Text(noteName))
         .scrollContentBackground(.hidden)
         .listStyle(.inset)
     }
@@ -105,6 +106,6 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView(currentRoom: Room(), roomName: roomName)
+        NoteView(currentRoom: Room(), roomName: .constant("valt rum"))
     }
 }
